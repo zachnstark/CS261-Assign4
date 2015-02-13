@@ -141,8 +141,21 @@ pre:	val is not null
 */
 struct Node *_addNode(struct Node *cur, TYPE val)
 {
-   /*write this*/
-   return NULL;
+   assert(val != 0);
+   int* curVal = (int*)cur->val;
+   int* typeVal = (int*)val;
+   if(cur == 0){
+      struct Node* newNode = malloc(sizeof(struct Node*));
+      newNode->val = val;
+      newNode->right = 0;
+      newNode->left = 0;
+      return newNode;
+   }
+   if(*typeVal >= *curVal)
+      cur->right = _addNode(cur->right, val);   
+   if(*typeVal < *curVal)
+      cur->left = _addNode(cur->left, val);
+   return cur;
 }
 
 /*
@@ -176,7 +189,19 @@ post:	none
 /*----------------------------------------------------------------------------*/
 int containsBSTree(struct BSTree *tree, TYPE val)
 {
-   /*write this*/
+   assert(tree != 0);
+   assert(val != 0);
+   struct Node* temp = tree->root;
+   while(temp != 0){
+      int* typeVal = (int*)val;
+      int* tempVal = (int*)temp->val;
+      if(*tempVal == *typeVal)
+	 return 1;
+      if(*typeVal > *tempVal)
+	 temp = temp->right;
+      if(*typeVal < *tempVal)
+	 temp = temp->left;
+   }
    return 0;
 }
 
@@ -191,8 +216,11 @@ post: none
 /*----------------------------------------------------------------------------*/
 TYPE _leftMost(struct Node *cur)
 {
-   /*write this*/
-   return NULL;
+   assert(cur != 0);
+   struct Node* temp = cur;
+   while(cur->left != 0)
+      temp = temp->left;
+   return temp->val;
 }
 
 
@@ -210,9 +238,12 @@ post:	the left most node of cur is not in the tree
 /*----------------------------------------------------------------------------*/
 struct Node *_removeLeftMost(struct Node *cur)
 {
-   /*write this*/
-   return NULL;
-}
+   assert(cur != 0);
+   /*if(cur->left != 0)
+      return cur;
+   else{
+      return cur->right;*/
+} 
 
 
 /*
