@@ -240,8 +240,10 @@ struct Node *_removeLeftMost(struct Node *cur)
 {
    assert(cur != 0);
    struct Node* temp = cur->right;
-   if(cur->left != 0)
+   if(cur->left != 0){
+      cur->left = _removeLeftMost(cur->left);
       return cur;
+   }
    else{
       free(cur);
       return temp;
@@ -263,7 +265,19 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
 {
    assert(cur != 0);
    assert(val != 0);
-   
+   int* curVal = (int*)cur->val;
+   int* typeVal = (int*)val;
+   if(curVal == typeVal){
+      cur->val = _leftMost(cur);
+      _removeLeftMost(cur);
+   }   
+   if(typeVal < curVal){
+      cur->left = _removeNode(cur->left, val);
+   }
+   if(typeVal > curVal){
+      cur->right = _removeNode(cur->right, val);
+   }
+   return cur;
 }
 
 
@@ -279,8 +293,8 @@ pose:	tree size is reduced by 1
 */
 void removeBSTree(struct BSTree *tree, TYPE val)
 {
-
-   /* Write This */
+   tree->root = _removeNode(tree->root, val);
+   tree->cnt--;
 }
 
 

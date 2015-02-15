@@ -25,8 +25,11 @@
  */
 int compare(TYPE left, TYPE right)
 {
-   struct data* dataLeft = (struct data*)left;
-   struct data* dataRight = (struct data*)right;
+   struct data* dataLeft = malloc(sizeof(struct data*));
+   struct data* dataRight = malloc(sizeof(struct data*));
+     
+   dataLeft->number = (int*)left;
+   dataRight->number = (int*)right;
 
    if(dataLeft->number == dataRight->number)
       return 0;
