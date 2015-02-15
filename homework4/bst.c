@@ -142,8 +142,6 @@ pre:	val is not null
 struct Node *_addNode(struct Node *cur, TYPE val)
 {
    assert(val != 0);
-   int* curVal = (int*)cur->val;
-   int* typeVal = (int*)val;
    if(cur == 0){
       struct Node* newNode = malloc(sizeof(struct Node*));
       newNode->val = val;
@@ -151,9 +149,9 @@ struct Node *_addNode(struct Node *cur, TYPE val)
       newNode->left = 0;
       return newNode;
    }
-   if(*typeVal >= *curVal)
+   if(compare(val, cur->val) == 0 || compare(val, cur->val) == 1)
       cur->right = _addNode(cur->right, val);   
-   if(*typeVal < *curVal)
+   if(compare(val, cur->val) == -1)
       cur->left = _addNode(cur->left, val);
    return cur;
 }
@@ -193,13 +191,11 @@ int containsBSTree(struct BSTree *tree, TYPE val)
    assert(val != 0);
    struct Node* temp = tree->root;
    while(temp != 0){
-      int* typeVal = (int*)val;
-      int* tempVal = (int*)temp->val;
-      if(*tempVal == *typeVal)
+      if(compare(val, temp->val) == 0)
 	 return 1;
-      if(*typeVal > *tempVal)
+      else if(compare(val, temp->val) == 1)
 	 temp = temp->right;
-      if(*typeVal < *tempVal)
+      else if(compare(val, temp->val) == -1)
 	 temp = temp->left;
    }
    return 0;
@@ -218,7 +214,7 @@ TYPE _leftMost(struct Node *cur)
 {
    assert(cur != 0);
    struct Node* temp = cur;
-   while(cur->left != 0)
+   while(temp->left != 0)
       temp = temp->left;
    return temp->val;
 }
@@ -246,6 +242,7 @@ struct Node *_removeLeftMost(struct Node *cur)
    }
    else{
       free(cur);
+      cur = 0;
       return temp;
    }
 } 
@@ -265,16 +262,14 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
 {
    assert(cur != 0);
    assert(val != 0);
-   int* curVal = (int*)cur->val;
-   int* typeVal = (int*)val;
-   if(curVal == typeVal){
+   if(compare(val, cur->val) == 0){
       cur->val = _leftMost(cur);
-      _removeLeftMost(cur);
+      cur = _removeLeftMost(cur);
    }   
-   if(typeVal < curVal){
+   else if(compare(val, cur->val) == -1){
       cur->left = _removeNode(cur->left, val);
    }
-   if(typeVal > curVal){
+   else if(compare(val, cur->val) == 1){
       cur->right = _removeNode(cur->right, val);
    }
    return cur;
@@ -373,7 +368,7 @@ message
 
 */
 void printTestResult(int predicate, char *nameTestFunction, char *message){
-   if (predicate)
+if (predicate)
       printf("%s(): PASS %s\n",nameTestFunction, message);
    else
       printf("%s(): FAIL %s\n",nameTestFunction, message);        
@@ -562,19 +557,19 @@ int main(int argc, char *argv[]){
 
    //After implementing your code, please uncommnet the following calls to the test functions and test your code 
 
-   // testAddNode();
+   testAddNode();
 
    printf("\n");
-   //	testContainsBSTree();
+   testContainsBSTree();
 
    printf("\n");
-   //testLeftMost();
+   testLeftMost();
 
    printf("\n");
-   //testRemoveLeftMost();
+   testRemoveLeftMost();
 
    printf("\n");
-   //testRemoveNode();
+   testRemoveNode();
 
 
    return 0;

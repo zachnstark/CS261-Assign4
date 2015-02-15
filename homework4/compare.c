@@ -25,18 +25,14 @@
  */
 int compare(TYPE left, TYPE right)
 {
-   struct data* dataLeft = malloc(sizeof(struct data*));
-   struct data* dataRight = malloc(sizeof(struct data*));
-     
-   dataLeft->number = (int*)left;
-   dataRight->number = (int*)right;
+   struct data* dataLeft = (struct data*)left;
+   struct data* dataRight = (struct data*)right;
 
    if(dataLeft->number == dataRight->number)
       return 0;
    if(dataLeft->number > dataRight->number)
       return 1;
-   else
-      return -1;
+   return -1;
 }
 
 /*Define this function, type casting the value of void * to the desired type*/
