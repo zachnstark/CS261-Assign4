@@ -239,10 +239,13 @@ post:	the left most node of cur is not in the tree
 struct Node *_removeLeftMost(struct Node *cur)
 {
    assert(cur != 0);
-   /*if(cur->left != 0)
+   struct Node* temp = cur->right;
+   if(cur->left != 0)
       return cur;
    else{
-      return cur->right;*/
+      free(cur);
+      return temp;
+   }
 } 
 
 
@@ -258,9 +261,9 @@ val is not null
 /*----------------------------------------------------------------------------*/
 struct Node *_removeNode(struct Node *cur, TYPE val)
 {
-   /*write this*/
-   return NULL;
-
+   assert(cur != 0);
+   assert(val != 0);
+   
 }
 
 
