@@ -263,8 +263,8 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
    assert(cur != 0);
    assert(val != 0);
    if(compare(val, cur->val) == 0){
-      cur->val = _leftMost(cur);
-      cur = _removeLeftMost(cur);
+      cur->val = _leftMost(cur->right);
+      cur = _removeLeftMost(cur->right);
    }   
    else if(compare(val, cur->val) == -1){
       cur->left = _removeNode(cur->left, val);
@@ -462,6 +462,182 @@ void testContainsBSTree() {
    myData2.name = "lefty";
    myData3.number = 110;
    myData3.name = "righty";
+   myData4.number = 10;
+   myData4.name = "lefty of lefty";
+   myData5.number = 111;
+   myData5.name = "not in tree";
+
+   printTestResult(containsBSTree(tree, &myData1), "containsBSTree", "when test containing 50 as root");
+
+   printTestResult(containsBSTree(tree, &myData2), "containsBSTree", "when test containing 13 as left of root");
+
+   printTestResult(containsBSTree(tree, &myData3), "containsBSTree", "when test containing 110 as right of root");
+
+   printTestResult(containsBSTree(tree, &myData4), "containsBSTree", "when test containing 10 as left of left of root");
+
+   //check containsBSTree fucntion when the tree does not contain a node    
+   printTestResult(!containsBSTree(tree, &myData5), "containsBSTree", "when test containing 111, which is not in the tree");
+
+}
+
+/*
+   fucntion to test the left_Most_element 
+
+*/
+void testLeftMost() {
+   struct BSTree *tree = buildBSTTree();
+
+   struct data myData3, myData4;
+
+   myData3.number = 110;
+   myData3.name = "righty";
+   myData4.number = 10;
+   myData4.name = "lefty of lefty";
+
+   printTestResult(compare(_leftMost(tree->root), &myData4) == 0, "_leftMost", "left most of root");
+
+   printTestResult(compare(_leftMost(tree->root->left), &myData4) == 0, "_leftMost", "left most of left of root");
+
+   printTestResult(compare(_leftMost(tree->root->left->left), &myData4) == 0, "_leftMost", "left most of left of left of root");
+
+   printTestResult(compare(_leftMost(tree->root->right), &myData3) == 0, "_leftMost", "left most of right of root");
+
+}
+
+void testRemoveLeftMost() {
+   struct BSTree *tree = buildBSTTree();
+   struct Node *cur;
+
+   cur = _removeLeftMost(tree->root);
+
+   printTestResult(cur == tree->root, "_removeLeftMost", "removing leftmost of root 1st try");
+
+   cur = _removeLeftMost(tree->root->right);
+   printTestResult(cur == NULL, "_removeLeftMost", "removing leftmost of right of root 1st try");
+
+   cur = _removeLeftMost(tree->root);
+   printTestResult(cur == tree->root, "_removeLeftMost", "removing leftmost of root 2st try");
+}
+
+void testRemoveNode() {
+   struct BSTree *tree = buildBSTTree();
+   struct Node *cur;
+   struct data myData1,  myData2,  myData3,  myData4, myData5, myData6;
+
+   myData1.number = 50;
+   myData1.name = "rooty";
+   myData2.number = 13;
+   myData2.name = "lefty";
+   myData3.number = 110;
+   myData3.name = "righty";
+   myData4.number = 10;
+   myData4.name = "lefty of lefty";
+   myData5.number = 15;
+   myData5.name = "right of lefty";
+   myData6.number = 14;
+   myData6.
+
+   _removeNode(tree->root, &myData4);
+   printTestResult(compare(tree->root->val, &myData1) == 0 && tree->root->left->left == NULL, "_removeNode", "remove left of left of root 1st try");
+
+   _removeNode(tree->root, &myData3);
+   printTestResult(compare(tree->root->val, &myData1) == 0 && tree->root->right == NULL, "_removeNode", "remove right of root 2st try");
+
+   _removeNode(tree->root, &myData2);
+   printTestResult(compare(tree->root->val, &myData1) == 0 && tree->root->left == 0, "_removeNode", "remove right of root 3st try");
+
+   cur = _removeNode(tree->root, &myData1);
+   printTestResult(cur == NULL, "_removeNode", "remove right of root 4st try");       
+}
+
+/*
+ * The following are test cases for the student struct
+ */
+
+void testAddNode_2() {
+   struct BSTree *tree	= newBSTree();
+
+   struct student myStud1,  myStud2,  myStud3,   myStud4;
+
+   myStud1.name = "Kyle";
+   myData1.id = 64;
+   addBSTree(tree, &myStud1);
+   //check the root node
+   if (compare(tree->root->val,&myStud1) != 0) {
+      printf("addNode() test: FAIL to insert Kyle as root\n");
+      return;
+   }
+   //check the tree->cnt value after adding a node to the tree
+   else if (tree->cnt != 1) {
+      printf("addNode() test: FAIL to increase count when inserting Kyle as root\n");
+      return;
+   }
+   else printf("addNode() test: PASS when adding Kyle as root\n");
+
+
+   myStud2.name = "Adam";
+   myStud2.id = 10;
+   addBSTree(tree, &myStud1);
+
+   //check the position of the second element that is added to the BST tree
+   if (compare(tree->root->left->val,  &myStud2) != 0) {
+      printf("addNode() test: FAIL to insert Jet as left child of root\n");
+      return;
+   }
+   else if (tree->cnt != 2) {
+      printf("addNode() test: FAIL to increase count when inserting Jet as left of root\n");
+      return;
+   }
+   else printf("addNode() test: PASS when adding Jet as left of root\n");
+
+
+   myStud3.name = "Matt";
+   myStud3.id = 54;
+   addBSTree(tree, &myStud3);
+
+   //check the position of the third element that is added to the BST tree    
+   if (compare(tree->root->right->val,  &myStud3) != 0) {
+      printf("addNode() test: FAIL to insert Matt as right child of root\n");
+      return;
+   }
+   else if (tree->cnt != 3) {
+      printf("addNode() test: FAIL to increase count when inserting Matt as right of root\n");
+      return;
+   }
+   else printf("addNode() test: PASS when adding Matt as right of root\n");
+
+
+   myStud4.name = "Bob";
+   myStud4.id = 42;
+   addBSTree(tree, &myStud4);
+
+   //check the position of the fourth element that is added to the BST tree
+   if (compare(tree->root->left->left->val,  &myStud4) != 0) {
+      printf("addNode() test: FAIL to insert Bob as left child of left of root\n");
+      return;
+   }
+   else if (tree->cnt != 4) {
+      printf("addNode() test: FAIL to increase count when inserting Bob as left of left of root\n");
+      return;
+   }
+   else printf("addNode() test: PASS when adding Bob as left of left of root\n");
+}
+
+/*
+   fucntion to test that the BST contains the elements that we added to it
+
+*/
+void testContainsBSTree() {
+   struct BSTree *tree = buildBSTTree();
+
+   struct data myData1,  myData2,  myData3,  myData4, myData5;
+
+   myStud1.name = "Kyle";
+   myStud1.id = 64;
+   myStud2.name = "Adam";
+   myStud2.id = 10;
+   myStud3.name = "Matt";
+   myStud3.id = 54;
    myData4.number = 10;
    myData4.name = "lefty of lefty";
    myData5.number = 111;
