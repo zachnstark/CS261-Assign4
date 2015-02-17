@@ -8,4 +8,4 @@ struct data {
 struct student {
 	char *name;
 	int id;
-}
+};
