@@ -4,3 +4,8 @@ struct data {
 	int number;
 	char *name;
 };
+
+struct student {
+	char *name;
+	int id;
+}
