@@ -528,6 +528,10 @@ void testLeftMost() {
 
 }
 
+/*
+ * Test for RemoveLeftMost function on struct data
+ */
+
 void testRemoveLeftMost() {
    struct BSTree *tree = buildBSTTree();
    struct Node *cur;
@@ -542,6 +546,10 @@ void testRemoveLeftMost() {
    cur = _removeLeftMost(tree->root);
    printTestResult(cur == tree->root, "_removeLeftMost", "removing leftmost of root 2st try");
 }
+
+/*
+ * test for removeNode function with struct data
+ */
 
 void testRemoveNode() {
    struct BSTree *tree = buildBSTTree();
@@ -599,6 +607,10 @@ void testRemoveNode() {
  * The following are test cases for the student struct
  */
 
+/*
+ * Builds a tree with 6 students in it
+ */
+
 struct BSTree *buildBSTTree_2(){
    struct BSTree *tree = newBSTree();
 
@@ -631,6 +643,10 @@ struct BSTree *buildBSTTree_2(){
 
    return tree;
 }
+
+/*
+ * Test for addnode with struct student
+ */
 
 void testAddNode_2() {
    struct BSTree *tree	= newBSTree();
@@ -762,6 +778,10 @@ void testLeftMost_2() {
 
 }
 
+/*
+ * test for removeleftmost for struct students
+ */
+
 void testRemoveLeftMost_2() {
    struct BSTree *tree = buildBSTTree_2();
    struct Node *cur;
@@ -776,6 +796,10 @@ void testRemoveLeftMost_2() {
    cur = _removeLeftMost(tree->root);
    printTestResult(cur == tree->root, "_removeLeftMost", "removing leftmost of root 2st try");
 }
+
+/*
+ * test for removenode with struct students
+ */
 
 void testRemoveNode_2() {
    struct BSTree *tree = buildBSTTree_2();
@@ -840,7 +864,8 @@ int main(int argc, char *argv[]){
 
 
    //After implementing your code, please uncommnet the following calls to the test functions and test your code 
-   if(1){
+   //If you want to test the bst with struct data change to if(0)
+   if(0){
    testAddNode();
 
    printf("\n");
@@ -857,7 +882,8 @@ int main(int argc, char *argv[]){
 
    printf("\n");
    }
-   if(0){
+   //If you want to test the bst with struct student, change to if(1)
+   if(1){
    testAddNode_2();
 
    printf("\n");
@@ -875,7 +901,4 @@ int main(int argc, char *argv[]){
    printf("\n");
    }
    return 0;
-
-
-
 }
