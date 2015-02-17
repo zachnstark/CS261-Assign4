@@ -864,7 +864,8 @@ int main(int argc, char *argv[]){
 
 
    //After implementing your code, please uncommnet the following calls to the test functions and test your code 
-   //If you want to test the bst with struct data change to if(0)
+   //If you want to test the bst with struct data change to if(1)
+   //Also change the compare2 to compare1 in the makefile
    if(0){
    testAddNode();
 
@@ -883,6 +884,7 @@ int main(int argc, char *argv[]){
    printf("\n");
    }
    //If you want to test the bst with struct student, change to if(1)
+   //Also change the compare1 to compare2 in the makefile
    if(1){
    testAddNode_2();
 
